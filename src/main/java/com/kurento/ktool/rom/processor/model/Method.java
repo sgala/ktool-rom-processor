@@ -74,6 +74,7 @@ public class Method extends NamedElement {
 
 	@Override
 	public List<ModelElement> getChildren() {
+		System.err.println(this.toString());
 		List<ModelElement> children = new ArrayList<ModelElement>(params);
 		if (returnProp != null) {
 			children.add(returnProp);

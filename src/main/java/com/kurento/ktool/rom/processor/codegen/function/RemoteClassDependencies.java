@@ -6,6 +6,7 @@ import java.util.List;
 import com.kurento.ktool.rom.processor.model.ComplexType;
 import com.kurento.ktool.rom.processor.model.Method;
 import com.kurento.ktool.rom.processor.model.Param;
+import com.kurento.ktool.rom.processor.model.Property;
 import com.kurento.ktool.rom.processor.model.RemoteClass;
 import com.kurento.ktool.rom.processor.model.Return;
 import com.kurento.ktool.rom.processor.model.Type;
@@ -34,8 +35,17 @@ public class RemoteClassDependencies implements TemplateMethodModelEx {
 		if (type instanceof RemoteClass) {
 			RemoteClass remoteClass = (RemoteClass) type;
 
-			for (Method method : remoteClass.getConstructors()) {
-				types.addAll(getMethodTypes(method));
+			for (Property prop : remoteClass.getProperties()) {
+				types.add(prop.getType().getType());
+			}
+
+			RemoteClass clazz = remoteClass;
+			while (clazz.getExtends() != null) {
+				clazz = (RemoteClass) clazz.getExtends().getType();
+				for (Property prop : clazz.getProperties()) {
+					types.add(prop.getType().getType());
+				}
+
 			}
 
 			for (Method method : remoteClass.getMethods()) {

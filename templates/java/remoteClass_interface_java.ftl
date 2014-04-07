@@ -77,15 +77,15 @@ done. If an error occurs, {@link Continuation#onError} is called.
 
     <#--Factory methods for other elements -->
     <#list model.remoteClasses as otherRemoteClass>
-    <#if isFirstConstructorParam(remoteClass, otherRemoteClass) && !otherRemoteClass.abstract>
+    <#if isFirstProperty(remoteClass, otherRemoteClass) && !otherRemoteClass.abstract>
     /**
      * Get a {@link ${otherRemoteClass.name}}.{@link Builder} for this ${remoteClass.name}
      *
     **/
-    @FactoryMethod("${otherRemoteClass.constructors[0].params[0].name}")
+    @FactoryMethod("${otherRemoteClass.properties[0].name}")
     public abstract ${otherRemoteClass.name}.Builder new${otherRemoteClass.name}(<#rt>
         <#assign num=0>
-        <#lt><#list otherRemoteClass.constructors[0].params as param>
+        <#lt><#list otherRemoteClass.properties as param>
         <#if !param.optional>
             <#if (num>0)>
                <#lt><#if (num>1)>, </#if><#rt>
@@ -109,7 +109,7 @@ done. If an error occurs, {@link Continuation#onError} is called.
         <@comment doc param />
         public Builder create(<#rt>
         <#assign first=true>
-        <#lt><#list remoteClass.constructors[0].params as param>
+        <#lt><#list remoteClass.properties as param>
         <#if !param.optional>
             <#lt><#if first><#assign first=false><#else>, </#if><#rt>
             <#lt>@Param("${param.name}") ${getJavaObjectType(param.type,false)} ${param.name}<#rt>
@@ -120,7 +120,7 @@ done. If an error occurs, {@link Continuation#onError} is called.
 
     public interface Builder extends AbstractBuilder<${remoteClass.name}> {
 
-        <#list remoteClass.constructors[0].params as param>
+        <#list remoteClass.properties as param>
         <#if param.type.name != "boolean" >
             <#assign par=[param] />
             <@comment  "Sets a value for ${param.name} in Builder for ${remoteClass.name}." par />

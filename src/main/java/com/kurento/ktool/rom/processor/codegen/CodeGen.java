@@ -16,7 +16,7 @@ import java.util.StringTokenizer;
 import com.google.gson.JsonObject;
 import com.kurento.ktool.rom.processor.codegen.function.CamelToUnderscore;
 import com.kurento.ktool.rom.processor.codegen.function.CppObjectType;
-import com.kurento.ktool.rom.processor.codegen.function.IsFirstConstructorParam;
+import com.kurento.ktool.rom.processor.codegen.function.IsFirstProperty;
 import com.kurento.ktool.rom.processor.codegen.function.JavaObjectType;
 import com.kurento.ktool.rom.processor.codegen.function.JsNamespace;
 import com.kurento.ktool.rom.processor.codegen.function.RemoteClassDependencies;
@@ -123,7 +123,7 @@ public class CodeGen {
 		root.put("getCppObjectType", new CppObjectType());
 		root.put("camelToUnderscore", new CamelToUnderscore());
 		root.put("remoteClassDependencies", new RemoteClassDependencies());
-		root.put("isFirstConstructorParam", new IsFirstConstructorParam());
+		root.put("isFirstProperty", new IsFirstProperty());
 		root.put("sphinxLinks", new SphinxLinks());
 		root.put("getJsNamespace", new JsNamespace());
 

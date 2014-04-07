@@ -14,6 +14,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
 import com.kurento.ktool.rom.processor.model.Method;
+import com.kurento.ktool.rom.processor.model.Property;
 import com.kurento.ktool.rom.processor.model.RemoteClass;
 import com.kurento.ktool.rom.processor.model.TypeRef;
 
@@ -42,8 +43,8 @@ public class RemoteClassAdapter implements JsonSerializer<RemoteClass>,
 			object.add("extends", context.serialize(src.getExtends()));
 		}
 
-		if (!src.getConstructors().isEmpty()) {
-			object.add("constructors", context.serialize(src.getConstructors()));
+		if (!src.getProperties().isEmpty()) {
+			object.add("properties", context.serialize(src.getProperties()));
 		}
 
 		if (!src.getMethods().isEmpty()) {
@@ -67,7 +68,7 @@ public class RemoteClassAdapter implements JsonSerializer<RemoteClass>,
 		String doc = null;
 		boolean abstractValue = false;
 		TypeRef extendsValue = null;
-		List<Method> constructors = new ArrayList<Method>();
+		List<Property> properties = new ArrayList<Property>();
 		List<Method> methods = new ArrayList<Method>();
 		List<TypeRef> events = new ArrayList<TypeRef>();
 
@@ -88,9 +89,9 @@ public class RemoteClassAdapter implements JsonSerializer<RemoteClass>,
 					TypeRef.class);
 		}
 
-		if (object.get("constructors") != null) {
-			constructors = context.deserialize(object.get("constructors"),
-					new TypeToken<List<Method>>() {
+		if (object.get("properties") != null) {
+			properties = context.deserialize(object.get("properties"),
+					new TypeToken<List<Property>>() {
 					}.getType());
 		}
 
@@ -107,7 +108,7 @@ public class RemoteClassAdapter implements JsonSerializer<RemoteClass>,
 		}
 
 		RemoteClass remoteClass = new RemoteClass(name, doc, extendsValue,
-				constructors, methods, events);
+				properties, methods, events);
 		remoteClass.setAbstract(abstractValue);
 		return remoteClass;
 	}

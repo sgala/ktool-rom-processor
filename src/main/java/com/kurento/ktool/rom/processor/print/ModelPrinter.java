@@ -95,12 +95,13 @@ public class ModelPrinter {
 		sb.append("\n");
 		sb.append("\n");
 
-		if (!remoteClass.getConstructors().isEmpty()) {
-			sb.append("   Declared Constructors: \n");
-			for (Method method : remoteClass.getConstructors()) {
-				sb.append("       ");
-				printMethod(sb, method, true);
-			}
+		if (!remoteClass.getProperties().isEmpty()) {
+			sb.append("   Properties: \n");
+			printDataItems(sb, remoteClass.getProperties());
+			/*
+			 * for (Property prop : remoteClass.getProperties()) {
+			 * sb.append("       "); }
+			 */
 			sb.append("\n");
 		}
 

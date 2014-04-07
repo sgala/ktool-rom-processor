@@ -65,13 +65,11 @@ public:
 
     virtual MediaObject * createObjectPointer (const Json::Value &params);
 
-    <#list remoteClass.constructors as constructor><#rt>
     MediaObject * createObject (<#rt>
-     <#lt><#list constructor.params as param><#rt>
+     <#lt><#list remoteClass.getAllProperties() as param><#rt>
         <#lt>${getCppObjectType(param.type, true)} ${param.name}<#rt>
         <#lt><#if param_has_next>, </#if><#rt>
      <#lt></#list>);
-    </#list>
 
     class StaticConstructor
     {
